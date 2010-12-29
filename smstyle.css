@@ -1,0 +1,121 @@
+﻿/* New Tabs */
+
+ul.t0 {
+  width: 605px;
+}
+ul.t0, ul.t0 li {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+ul.t0 li {
+  float: left;
+  text-align: center;
+}
+ul.t0 li.activeLink a, ul.t0 li.activeLink a:hover {
+  background: #36638E;
+  color: #FFFFFF;
+}
+ul.t0 li a:hover {
+  background: #DAE1E8;
+  color: #2B587A;
+  text-decoration: none;
+}
+ul.t0 a {
+  float: left;
+  padding: 0 0 5px 0;
+  margin-right: 5px;
+  text-decoration: none;
+  background-color: #FFF;
+}
+ul.t0 .tab_word {
+  margin: 5px 10px 0px 10px;
+  font-weight: normal;
+}
+ul.t0 .t_r {
+  float: right;
+  padding: 5px 0 0;
+}
+ul.t0 .t_r a {
+  margin:0;
+}
+ul.t0 .t_r a:hover {
+  text-decoration: underline;
+  background:#FFFFFF;
+}
+.tl1, .tl2 {
+  display: block;
+  height: 1px;
+  background-color: #FFF;
+  overflow: hidden;
+  margin: 0px;
+  border: 1px solid #FFF;
+  border-width: 0px 2px;
+}
+.tl2 {
+  margin-bottom: 3px;
+  border-width: 0px 1px;
+}
+ul.t0 li a:hover b.tl1, ul.t0 li a:hover b.tl2 {
+  background-color: #DAE1E8;
+}
+ul.t0 li.activeLink a b.tl1, ul.t0 li.activeLink a:hover b.tl1 {
+  background-color: #36638E;
+  border-width: 0px 1px;
+}
+ul.t0 li.activeLink a b.tl1 b, ul.t0 li.activeLink a:hover b.tl1 b {
+  display: block;
+  height: 1px;
+  background: #36638E;
+  overflow: hidden;
+  margin: 0px;
+  border: 1px solid #9AB1C6;
+  border-width: 0px 1px;
+}
+ul.t0 li.activeLink a b.tl2, ul.t0 li.activeLink a:hover b.tl2 {
+  background-color: #36638E;
+  border-color: #9AB1C6;
+}
+
+/*audio*/
+.audio td, .audio .play{
+    float: left;
+}
+.audio td.info{
+    float: inherit;
+}
+
+.playimg, .audioRow td:first-child, div.play{
+    float: left;
+}
+.dlimg{
+    margin-left: 4px;
+}
+.audioTitle{
+    width: 100%;
+}
+/*стиль текстовых иконок*/
+ul.nNav {
+  font-size: 11px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+ 
+}
+.nNav li {
+ float: left;
+ display: inline;
+ margin-left: 5px;
+ text-align:center;
+ width: expression(this.getElementsByTagName("a")[0].offsetWidth+16+"px");
+ border-bottom: 1px solid #eee;
+}
+.nNav li a:hover {
+ color: #DAE1E8;
+ text-decoration:none;
+}
+.nNav li a {
+ color: #FFF;
+ display:inline;
+ white-space: nowrap;
+}
