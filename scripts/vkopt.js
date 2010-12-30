@@ -4120,8 +4120,7 @@ function vkLoginLink(){
 }
 var vkReadyFunc=vkonDOMReady;//(typeof onDomReady!='undefined')?onDomReady:vkonDOMReady;
 var dloc=document.location.href;
-if (!dloc.match(/login\.vk\.com|al_index\.php|\/login\.php/i)){
+if (!dloc.match(/login\.vk\.com|al_index\.php|\/login\.php/i) && !ge("quick_login")){
     vkReadyFunc(VkOptInit);
 }
 
-
