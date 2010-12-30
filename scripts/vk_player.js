@@ -1,4 +1,4 @@
-// ==UserScript==
+﻿// ==UserScript==
 // @name          VK_ExtAudioPlayer v0.5    (Vkopt module)
 // @description   (by KiberInfinity id13391307)
 // @include_       */audio.php*

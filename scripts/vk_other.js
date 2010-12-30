@@ -1,4 +1,4 @@
-// ==UserScript==
+﻿// ==UserScript==
 // @name          VKopt_Other_function
 // @description   (by KiberInfinity id13391307)
 // @include       http://*vkontakte.ru/*

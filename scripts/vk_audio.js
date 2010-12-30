@@ -1,4 +1,4 @@
-// ==UserScript==
+﻿// ==UserScript==
 // @description   Vkontakte Optimizer 1.6.5
 // @include       *vkontakte.ru*
 // @include       *vkadre.ru*

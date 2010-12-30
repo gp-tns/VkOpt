@@ -1,4 +1,4 @@
-// ==UserScript==
+﻿// ==UserScript==
 // @name          Vkontakte Optimizer module (ExUserMenu && other users functions)
 // @description   (by KiberInfinity id13391307)
 // @include       http://*vkontakte.ru/*

@@ -1,4 +1,4 @@
-// ==UserScript==
+﻿// ==UserScript==
 // @name          VK_ExtAudioPlayer page controls v 0.9    (VKopt module)
 // @description   (by KiberInfinity id13391307)
 // @include       http://*vkontakte.ru/*

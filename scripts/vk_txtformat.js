@@ -1,4 +1,4 @@
-// ==UserScript==
+﻿// ==UserScript==
 // @description   Vkontakte Optimizer module
 // @include       *vkontakte.ru*
 // @include       *vk.com*

@@ -1,4 +1,4 @@
-// ==UserScript==
+﻿// ==UserScript==
 // @description   Vkontakte Optimizer Local Setting
 // @include       *vkontakte.ru*
 // @include       *vkadre.ru*

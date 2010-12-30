@@ -1,4 +1,4 @@
-// ==UserScript==
+﻿// ==UserScript==
 // @description   Vkontakte Optimizer StyleModule (by KiberInfinity id13391307)
 // @include       *vkontakte.ru*
 // @include       *vkadre.ru*
