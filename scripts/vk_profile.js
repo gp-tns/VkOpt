@@ -210,6 +210,21 @@ function vkFrProfile(){
         break; 
   }
 
+    //audios
+    var ids = {"profile_audios": vkAudiosGet, "profile_groups": vkGroupsGet};
+    var i;
+    for(i in ids){
+        var abox = ge(i);
+        if(!abox){
+            return;
+        }
+        var aud_header = abox.getElementsByClassName("header_bottom")[0];
+        aud_header.removeChild(aud_header.firstChild);
+        var text = "[ " + aud_header.firstChild.textContent + " ]", link;
+        aud_header.removeChild(aud_header.firstChild);
+        aud_header.insertBefore(link = $c("a",{"#text": text, "href": "javascript:void(0);" }), aud_header.firstChild);
+        link.addEventListener("click", ids[i], 1);
+    }
 }
 
 function vkFriends_get(idx){
@@ -237,6 +252,70 @@ function vkFriends_get(idx){
     onChangeContent(); 
     if (getSet(17) == 'y' || getSet(17) > 0) best(idx);
     
+    });
+}
+function vkAudiosGet(){
+    AjPost('audio.php', {id:cur.oid, qty:'60'}, function(r, t){
+        var abox = ge("profile_audios"), div, ns = {}, s = "";
+        var aud_body = abox.getElementsByClassName("module_body")[0];
+        t = JSON.parse(t);
+        aud_body.innerHTML = "";
+        var d = $hp(t.html);
+        var divtpl = '<div class="audio" id="audio${id}">\
+    <table>\
+        <tr>\
+        <td>\
+            <input type="hidden" id="audio_info${id}" value="${url},${len}">\
+            <div class="play" id="play${id}" onclick="playAudio(\'${id}\')" style="width: 17px">\
+        </td>\
+        <td class="info">\
+            <div class="duration fl_r">${len2}</div>\
+            <b><a href="/gsearch.php?section=audio&c[q]=${eprf}">${prf}</a></b> - ${title}\
+        </td>\
+        </tr>\
+    </table>\
+    <div class="player_wrap">\
+        <div id="line${id}" class="playline"><div></div></div>\
+        <div id="player${id}" class="player"></div>\
+    </div>\
+</div>';
+        for(var i = 0; i < d.childNodes.length; i++){
+            if((div = d.childNodes[i]).tagName == "DIV"){
+                ns = {};
+                ns.id = div.id.substr(5);
+                ns.url = /operate\('[^']+','(http:\/\/[^']+)',(\d+)\)/.exec($x(".//img[@id='imgbutton" + ns.id + "']", d)[0].onclick);
+                ns.len = ns.url[2];
+                ns.url = ns.url[1];
+                ns.len2 = $x(".//div[@id='audio" + ns.id + "']//div[@class='duration']", d)[0].innerText;
+                ns.prf = $x(".//b[@id='performer" + ns.id + "']", d)[0].innerText;
+                ns.title = $x(".//span[@id='title" + ns.id + "']", d)[0].innerText;
+                s += $rnd(divtpl, ns);
+            }
+        }
+        aud_body.innerHTML = s;
+    });
+}
+
+function vkGroupsGet(){
+    AjPost('groups.php', {id:cur.oid, qty:'60'}, function(r, t){
+        var gbox = ge("profile_groups");
+        var g_body = gbox.getElementsByClassName("module_body")[0];
+        t = JSON.parse(t);
+        var d = $hp(t.html);
+        var rm = $x(".//td[@class='tunaimage']", d).concat(
+            $x(".//td[@class='actions']", d),
+            $x(".//td[@class='label']", d),
+            $x(".//td[@class='printcontent'][a]", d)
+        );//.//td[@class='tunaimage']|.//td[@class='actions']|.//td[@class='label']", d);
+        for(var i = 0;i< rm.length; i++){
+            rm[i].parentNode.removeChild(rm[i]);
+        }
+        rm = $x(".//td[@class='printcontent']/div", d);
+        for(i = 0;i< rm.length; i++){
+            rm[i].setAttribute("style","overflow:hidden");
+        }
+        g_body.innerHTML = "";
+        g_body.appendChild(d);
     });
 }
 
