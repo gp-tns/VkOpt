@@ -83,18 +83,20 @@ function vkLoadImage(url, callback,fulllink) { //callback(url,width,heigth)
 
 function vkShowPreview(url,width,height,FullLink){
   //alert(FullLink);
-  if (!window.vkPreviewBox) vkPreviewBox = new MessageBox({title: IDL('Preview'),closeButton:true, width:"auto"});
+  if (window.vkPreviewBox) vkPreviewBox.hide();
+  if (!window.vkPreviewBox || isNewLib()) vkPreviewBox = new MessageBox({title: IDL('Preview'),closeButton:true, width:"800px"});
   vkPreviewBox.setOptions({fullPageLink: (FullLink?FullLink:'')});
   vkHidePreview=function(){
     vkPreviewBox.hide();
-    vkPreviewBox.content("");
+    //vkPreviewBox.content("");
   }
   vkPreviewBox.removeButtons();
-  vkPreviewBox.addButton({
-    onClick: function(){ vkPreviewBox.hide(200); },
-    style:'button_no',label:IDL('Cancel')});
+  vkPreviewBox.addButton(!isNewLib()?{
+    onClick: vkPreviewBox.hide,
+    style:'button_no',label:IDL('Cancel')}:IDL('Cancel'),vkPreviewBox.hide,'no');
+    
   vkPreviewBox.setOptions({onHide: vkHidePreview});
-  vkPreviewBox.content('<img src="'+url+'" style="cursor:hand;" onclick="vkHidePreview();" height="'+height+'px">').show();
+  vkPreviewBox.content('<center><img src="'+url+'" style="cursor:hand;" onclick="vkHidePreview();" height="'+height+'px"></center>').show();
   return false;
 }
 
@@ -128,7 +130,7 @@ function vkPreviewPhoto(link){
     arr=eval(arr[1]);
     for (var i=0;i<arr.length;i++)  vkPhotosLinkCache['photo'+arr[i][0]]=arr[i];
   };
-  if (!window.vkPreviewBox) vkPreviewBox = new MessageBox({title: IDL('Preview'),fullPageLink: (link?link:''), closeButton:true,width:"auto"});
+  if (!window.vkPreviewBox || isNewLib()) vkPreviewBox = new MessageBox({title: IDL('Preview'),fullPageLink: (link?link:''), closeButton:true,width:"auto"});
   vkPreviewBox.setOptions({fullPageLink: (link?link:'')});
   //vkPreviewBox.setOptions({title: 'qweqwe'});
   vkPreviewBox.content('<div class="box_loader" style="width:250px;"></div>').show();
@@ -874,9 +876,14 @@ return  '<div id="fgraff"><ol id="nav"><li><center><a href="#" onclick="hide(\'f
 function vkShowFakeGraffLoader(mid){
   var Box = new MessageBox({title: IDL('LoadFakeGraffiti')});
   Box.removeButtons();
-  Box.addButton({
-    onClick: function(){ msgret=Box.hide(200);Box.content("") },
+  /*Box.addButton({
+    onClick: function(){ msgret=Box.hide(200);Box.content(""); },
     style:'button_no',label:IDL('Cancel')});
+  */
+  Box.addButton(!isNewLib()?{
+    onClick:  function(){ msgret=Box.hide(200);Box.content(""); },
+    style:'button_no',label:IDL('Cancel')}:IDL('Cancel'), function(){ msgret=Box.hide(200);Box.content(""); },'no');
+    
   Box.content(vkGraffUpForm('/graffiti.php?'+((location.href.match(/club\d+/))?"group_id=":"to_id=")+mid)).show(); 
   //vk_MsgBox(vkGraffUpForm('/graffiti.php?to_id='+mid+'&group_id=0'),IDL('LoadFakeGraffiti'));
   vkMakeGrafSidGen();

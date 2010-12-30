@@ -46,8 +46,10 @@ function vkFriendsList_Create(){
   if (!window.FrUpdCreateBox || isNewLib()) FrUpdCreateBox = new MessageBox({title: IDL('FriendsListTest'),closeButton:false,width:"350px"});
   var box=FrUpdCreateBox;
   box.removeButtons();
-  box.addButton({ 
-    onClick: function(){ box.hide(200); }, style:'button_no',label:IDL('Hide') }); 
+  
+  box.addButton(!isNewLib()?{
+    onClick: box.hide, style:'button_no',label:IDL('Hide')}:IDL('Hide'),box.hide,'no');
+  
   box.content('<div class="box_loader"></div>').show();
   AjGet('/notes.php',function(r,t){
     var div=document.createElement('div');
@@ -63,7 +65,8 @@ function vkFriendsList_Create(){
     var NewNote=function(){
       box.setOptions({title:IDL("NoteCreating")});
       box.removeButtons();
-      box.addButton({ onClick: function(){ box.hide(200); }, style:'button_no',label:IDL('Hide') });
+      box.addButton(!isNewLib()?{
+        onClick: box.hide, style:'button_no',label:IDL('Hide')}:IDL('Hide'),box.hide,'no');
       box.content('<div class="box_loader"></div>');
       AjGet('/notes.php?act=new',function(r,t){
         var nhash = t.split('"hash" value="')[1].split('"')[0];
@@ -87,9 +90,14 @@ function vkFriendsList_Create(){
     }
     if (nid){
       box.removeButtons();
-      box.addButton({ onClick: function(){ box.hide(200); }, style:'button_no',label:IDL('Cancel') });
-      box.addButton({ onClick: NewNote, style:'button_no',label:IDL('No') }); 
-      box.addButton({ onClick: UseOldNote, label:IDL('Yes') });   
+
+      box.addButton(!isNewLib()?{
+        onClick: box.hide, style:'button_no',label:IDL('Cancel')}:IDL('Cancel'),box.hide,'no');
+      box.addButton(!isNewLib()?{
+        onClick: NewNote, style:'button_no',label:IDL('No')}:IDL('No'),NewNote,'no');    
+      box.addButton(!isNewLib()?{
+        onClick: UseOldNote,label:IDL('Yes')}:IDL('Yes'),UseOldNote,'yes');        
+
        
       box.content(IDL('FrNoteFound').replace('{note}','<a href="'+note+'" target="blank">'+note+'</a>')).show();
     } else {

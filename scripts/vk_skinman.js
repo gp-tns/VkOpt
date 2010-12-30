@@ -9,7 +9,7 @@
 //
 
 
-var VK_CSS_CATALOG_BASE_URL='http://vkopt.net.ru/css/vk_css_list.js';//'http://vkopt.net.ru/css/styles_list.js';//'http://localhost/vks/styles_list.js';
+var VK_CSS_CATALOG_BASE_URL='http://vkopt.net/css/vk_css_list.js';//'http://vkopt.net.ru/css/styles_list.js';//'http://localhost/vks/styles_list.js';
 var VK_THEMES_ON_PAGE=30;
 function vkLocalStoreReady(){
   if (window.localStorage || window.GM_SetValue || window.sessionStorage) {
@@ -156,11 +156,14 @@ vkScreenBox.hide(200);
 vkScreenBox.content("");
 }
 function vkShowScreen(url){
-  if (!window.vkScreenBox) vkScreenBox = new MessageBox({title: IDL('Preview'),fullPageLink:url+'" target="_blank',closeButton:true,width:"800px"});
+  if (!window.vkScreenBox || isNewLib()) vkScreenBox = new MessageBox({title: IDL('Preview'),fullPageLink:url+'" target="_blank',closeButton:true,width:"800px"});
   vkScreenBox.removeButtons();
-  vkScreenBox.addButton({
-    onClick: function(){ vkHideScreen(); },
-    style:'button_no',label:IDL('Cancel')});
+  
+  vkScreenBox.removeButtons();
+  vkScreenBox.addButton(!isNewLib()?{
+    onClick: vkHideScreen,
+    style:'button_no',label:IDL('Cancel')}:IDL('Cancel'),vkHideScreen,'no');
+    
   vkScreenBox.setOptions({onHide: vkHideScreen});
   vkScreenBox.content('<img src="'+url+'" onclick="vkHideScreen();" width="780px">').show();
   
@@ -188,8 +191,8 @@ function vkCatNavigate(elem){
   return false;
 }
 function vkMakeCatMenu(cats){
-  var el = ge("nav") || ge("side_bar").firstElementChild;
   if (!ge("snav")){
+    el=(ge('sideBar') || ge('side_bar')).getElementsByTagName('ol')[0];//ge("nav");
     //el.setAttribute("id","snav");
     var html='<li><h6 style="cursor:hand;" onclick="vkLoadLeftMenu();">'+IDL('categories')+"</h6></li>"+
              '<li><a href=# onclick="return vkShowSkinMan();">'+IDL('all')+'<span>'+cats.SkinsCount+'</span></a></li>';
@@ -243,7 +246,7 @@ function vkMakePageListS(cur,end,href,onclick,step){
  var after=2;
  var before=2;
  if (!step) step=1;
- var html='<ul class="pageList">';
+ var html='<ul class="pageList page_list fl_r">';
     if (cur>before) html+='<li><a href="'+href.replace(/%%/g,0)+'" onclick="'+onclick.replace(/%%/g,0)+'">&laquo;</a></li>';
     var from=Math.max(0,cur-before);
     var to=Math.min(end,cur+after);
@@ -291,10 +294,11 @@ function vkShowSkinMan(filter,page){
           .smaximize {  border-bottom: 1px solid #DAE1E8;  height: 19px;  line-height: 19px;  background-color: transparent; display: block;  clear: both;  padding: 3px; padding-left:25px;  border-bottom: solid 1px #CCD3DA; } \
           .smaximize:hover {  background-color: #DAE1E8;} \
           .smaximizeoff {  opacity: 0.5; color: #2b587a; border-bottom: 1px solid #DAE1E8;  height: 19px;  line-height: 19px;  background-color: transparent; display: block;  clear: both;  padding: 3px; padding-left:25px; border-bottom: solid 1px #CCD3DA; } \
-          #nav li a span{float:right;} \
+          #nav li a span, #side_bar li a span{float:right;} \
           ");
   vkMakeCatMenu(cats);
-  var html='<div class="bar clearFix summaryBar">'+
+  var html='<div class="bar clearFix summaryBar summary_wrap clear_fix">'+
+             '<div id="toppages" class="fl_r pages_top"></div>'+
              '<div class="summary">'+langNumeric(vkMyStyles.length,vk_lang["theme_num"])+ //+vkMyStyles.length+' '+IDL('Skins')+
                 '<span class="divider">|</span>'+
                 '<a class="notbold" href="#" onclick="return vkSwichStyle(prompt(IDL(\'EnterCSSLink\')));">'+IDL('SetByLink')+'</a>'+
@@ -303,7 +307,7 @@ function vkShowSkinMan(filter,page){
                 (vkLocalStoreReady() && vk_LSGetVal('VK_CURRENT_CSS_CODE') && vk_LSGetVal('VK_CURRENT_CSS_CODE').length?'<span class="divider">|</span>'+
                 '<a class="notbold" href="#" onclick="vkSwichCSS(\'\');return false;">'+IDL('ClearCssCode')+'</a>':'')+
              '</div>'+
-             '<div id="toppages"></div>'+
+             
             '</div>'+
   '<div id="vkSkinMan">'+
   '<div id="searchResults" class="searchResults clearFix"><div class="skin_table">';
@@ -333,10 +337,6 @@ function vkShowSkinMan(filter,page){
   ge("content").innerHTML=html;
   ge("toppages").innerHTML=vkMakePageListS(page,Math.ceil(vkMyStyles.length/VK_THEMES_ON_PAGE)-1,"javascript:vkShowSkinMan("+(filter?filter:false)+",%%);","vkShowSkinMan("+(filter?filter:false)+",%%); return false;");
   ge("header").innerHTML='<h1>'+IDL("SkinMan")+'</h1>';
-  var tmp;
-  if(tmp = ge("home")){
-      tmp.removeAttribute("onclick");
-  }
   return false;
 }
 

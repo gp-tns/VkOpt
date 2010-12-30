@@ -10,8 +10,8 @@
 //  functions for work with users
 var vkUsersDomain={};
 function isUserLink(url){
-if ((!(url.match(/(club|event|photo|photos|album|albums|video|videos|note|notes|app|page|board|topic|write|graffiti\d)-?\d+/i) || 
-       url.match(/javascript|#|\.mp3|\.flv|\.mov|http...www/i) || url.match(/\.php($|\?)/i) || 
+if ((!(url.match(/(club|event|photo|photos|album|albums|video|videos|note|notes|app|page|board|topic|write|public|wall|graffiti\d)-?\d+/i) || 
+       url.match(/javascript|friendsphotos|#|\.mp3|\.flv|\.mov|http...www/i) || url.match(/\.php($|\?)/i) || 
        url.match(/\/$/i)
       ) || 
     url.match(/(id|profile.php=id)\d+/i)) && !url.match(/http.{3}\w+\.vk.*\/.?/i)){

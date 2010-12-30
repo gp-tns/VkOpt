@@ -69,7 +69,7 @@ function vkAddAppMenu(menu){
 }
 /* EXAMPLE
 javascript: vkAddAppMenu({name:"my",id:"vkapp",items:[
-{name:"Download",href:"http://vkopt.net.ru/"},{name:"Alert",onclick:function(){alert('qwe')} }
+{name:"Download",href:"http://vkopt.net/"},{name:"Alert",onclick:function(){alert('qwe')} }
 ]});
 */
 

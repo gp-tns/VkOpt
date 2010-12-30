@@ -183,6 +183,12 @@ function vkFrProfile(){
   'all':/friends.php(\?|$)(?!filter).*/,
   'common':'filter=common'
   };
+  var mod_el={
+    'profile_albums':function(el){
+        var el=geByClass('module_body',el)[0];
+        el.innerHTML='<div align="center"><a href="/photos.php?act=albums&oid='+cur.oid+'">[ '+IDL("obzor")+' ]</a> <a href="/photos.php?act=comments&id='+cur.oid+'">[ '+IDL("komm")+' ]</a></div>'+el.innerHTML;
+      }
+  };
   for (var i=0; i<els.length;i++)
     if (els[i].href){
       var mod_l=false;
@@ -190,7 +196,9 @@ function vkFrProfile(){
           if (els[i].href.match(fr_match[key])) {mod_l=true; mod(els[i],key);}  
       }
       if (!mod_l) mod_lite(els[i]);
-      var key=els[i].parentNode.id
+      var key=els[i].parentNode.id;
+      if (mod_el[key]) mod_el[key](els[i].parentNode);
+      
       if (key && vk_shuts_mask[key]){
         els[i].setAttribute("onclick",'return shut("'+key+'");');
         addClass(key,'shut_open');
@@ -209,51 +217,24 @@ function vkFrProfile(){
         shut('profile_full_info','0');
         break; 
   }
-
     //audios
-    var ids = {"profile_audios": vkAudiosGet, "profile_groups": vkGroupsGet};
-    var i;
-    for(i in ids){
-        var abox = ge(i);
-        if(!abox){
-            return;
-        }
-        var aud_header = abox.getElementsByClassName("header_bottom")[0];
-        aud_header.removeChild(aud_header.firstChild);
-        var text = "[ " + aud_header.firstChild.textContent + " ]", link;
-        aud_header.removeChild(aud_header.firstChild);
-        aud_header.insertBefore(link = $c("a",{"#text": text, "href": "javascript:void(0);" }), aud_header.firstChild);
-        link.addEventListener("click", ids[i], 1);
-    }
+  var ids = {"profile_audios": vkAudiosGet, "profile_groups": vkGroupsGet};
+  var i;
+  for(i in ids){
+      var abox = ge(i);
+      if(!abox){
+          return;
+      }
+      var aud_header = abox.getElementsByClassName("header_bottom")[0];
+      aud_header.removeChild(aud_header.firstChild);
+      var text = "[ " + aud_header.firstChild.textContent + " ]", link;
+      aud_header.removeChild(aud_header.firstChild);
+      aud_header.insertBefore(link = $c("a",{"#text": text, "href": "javascript:void(0);" }), aud_header.firstChild);
+      link.addEventListener("click", ids[i], 1);
+  }
+
 }
 
-function vkFriends_get(idx){
-//if (1) shut('profile_friends_'+idx);
-  var count_el=ge('Fr'+idx+'Lnk');
-  if (!count_el) return;
-  if (getSet(8) == 'n' && idx=='online') {
-    clearTimeout(IDFrOnlineTO);
-    IDFriendTime=getSet('-',5)*60000;
-    IDFrOnlineTO = setTimeout("vkFriends_get('"+idx+"');", IDFriendTime);
-  }
-  vkStatus('[Friends '+idx+' Loading]');
-  AjPost('friends.php',{id:cur.oid,filter:idx,qty:'60'},function(r,t){
-    var res=eval('('+t+')');
-    var fr=res.friends;
-    count_el.innerHTML=count_el.innerHTML.replace(/\d+/,fr.length);
-    
-    var html='';
-    fr=vkSortFrList(fr);
-    for (var i=0; i<fr.length;i++)
-    html+='<div align="left" style="margin-left: 10px; width:180px;">&#x25AA;&nbsp;<a href="mail.php?act=write&to='+fr[i][0]+'" onclick="return AjMsgFormTo('+fr[i][0]+');" target="_blank">@</a>&nbsp;<a href="id'+fr[i][0]+'">'+fr[i][1]+'</a></div>';
-    if (fr.length==0) html+='<div align="left" style="margin-left: 10px; width:180px;"><strike>&#x25AA;&nbsp;Nobody&nbsp;OnLine</strike></div>';
-    ge('friends_profile_'+idx).innerHTML=html;
-    vkStatus('');
-    onChangeContent(); 
-    if (getSet(17) == 'y' || getSet(17) > 0) best(idx);
-    
-    });
-}
 function vkAudiosGet(){
     AjPost('audio.php', {id:cur.oid, qty:'60'}, function(r, t){
         var abox = ge("profile_audios"), div, ns = {}, s = "";
@@ -316,6 +297,33 @@ function vkGroupsGet(){
         }
         g_body.innerHTML = "";
         g_body.appendChild(d);
+    });
+}
+function vkFriends_get(idx){
+//if (1) shut('profile_friends_'+idx);
+  var count_el=ge('Fr'+idx+'Lnk');
+  if (!count_el) return;
+  if (getSet(8) == 'n' && idx=='online') {
+    clearTimeout(IDFrOnlineTO);
+    IDFriendTime=getSet('-',5)*60000;
+    IDFrOnlineTO = setTimeout("vkFriends_get('"+idx+"');", IDFriendTime);
+  }
+  vkStatus('[Friends '+idx+' Loading]');
+  AjPost('friends.php',{id:cur.oid,filter:idx,qty:'60'},function(r,t){
+    var res=eval('('+t+')');
+    var fr=res.friends;
+    count_el.innerHTML=count_el.innerHTML.replace(/\d+/,fr.length);
+    
+    var html='';
+    fr=vkSortFrList(fr);
+    for (var i=0; i<fr.length;i++)
+    html+='<div align="left" style="margin-left: 10px; width:180px;">&#x25AA;&nbsp;<a href="mail.php?act=write&to='+fr[i][0]+'" onclick="return AjMsgFormTo('+fr[i][0]+');" target="_blank">@</a>&nbsp;<a href="id'+fr[i][0]+'">'+fr[i][1]+'</a></div>';
+    if (fr.length==0) html+='<div align="left" style="margin-left: 10px; width:180px;"><strike>&#x25AA;&nbsp;Nobody&nbsp;OnLine</strike></div>';
+    ge('friends_profile_'+idx).innerHTML=html;
+    vkStatus('');
+    onChangeContent(); 
+    if (getSet(17) == 'y' || getSet(17) > 0) best(idx);
+    
     });
 }
 

@@ -224,6 +224,7 @@ var mid=remixmid();//(ge('sideBar') || ge('side_bar')).innerHTML.split('mail.php
 //if (!ge('id')) return;
 var vid = ge('video_id').value;//id
 var mvid = ge('owner_id').value;//document.getElementById('videocaption').getElementsByTagName('div')[0].getElementsByTagName('a')[0].href.split('id')[1];
+
 if (ge('videoactions').innerHTML.match('showTagSelector')){//if (mid == mvid) {
  document.getElementById("videoactions").innerHTML+='<span class="action_link"><a href=# onclick="javascript:IDVideoSelect_tag();">'+IDL("selall")+'</a></span>';
  IDVideoDelSelect();
@@ -232,15 +233,15 @@ if (ge('videoactions').innerHTML.match('showTagSelector')){//if (mid == mvid) {
 }
 
 function IDVideoDelSelect(){
-if (ge('tagsCont').getElementsByTagName('span').length && !ge("videoactions").innerHTML.match("IDVideoSelect_del")) ge("videoactions").innerHTML+='<a href=# onclick="javascript:IDVideoSelect_del();">'+IDL("remall")+'</a>';
+if (ge('tagsCont').getElementsByTagName('span').length && !ge("videoactions").innerHTML.match("IDVideoSelect_del")) ge("videoactions").innerHTML+='<span class="action_link"><a href=# onclick="javascript:IDVideoSelect_del();">'+IDL("remall")+'</a></span>';
 }
 
 
 function IDVideoSelect_tag(listfid) {
-  var mid  =(ge('sideBar') || ge('side_bar')).innerHTML.split('mail.php')[1].match(/id=(\d+)/)[1];
+ //var mid  = remixmid();
   var vid  = ge('video_id').value;
   var tagel= ge('tagsCont');
-  var mvid = ge('videocaption').getElementsByTagName('div')[0].getElementsByTagName('a')[0].href.split('id')[1];
+  //var mvid = ge('videocaption').getElementsByTagName('div')[0].getElementsByTagName('a')[0].href.split('id')[1];
   var num=0;
   if (!listfid) num=friendsForTags.length;
   else num=listfid.length;
@@ -256,7 +257,7 @@ function IDVideoSelect_tag(listfid) {
                     var fid=listfid[i]; var text=listfid[i];
                 }
                 var curnow = i+1;
-                ge('videoactions').innerHTML='<h1>'+curnow+'/'+num+'</h1><br><br><h1>'+fid+'</h1>';
+                ge('videoactions').innerHTML=vkProgressBar(curnow,num,160,'<h1>'+curnow+'/'+num+'</h1>')+'<br><br><h1>'+fid+'</h1>';//'<h1>'+curnow+'/'+num+'</h1><br><br><h1>'+fid+'</h1>';
                 setTimeout(function(){Ajax.postWithCaptcha('/video.php', {act: 'aaddtag', vid: vid, fid: fid, text: text, oid: ge('owner_id').value}, options);},300);
                 i++;
               } else {FinishSel();}
@@ -269,7 +270,7 @@ function IDVideoSelect_tag(listfid) {
 
 function IDVideoSelect_del() {
 var vid = document.getElementById('id').value;
-var mvid = document.getElementById('videocaption').getElementsByTagName('div')[0].getElementsByTagName('a')[0].href.split('id')[1];
+var mvid = ge('owner_id').value;//document.getElementById('videocaption').getElementsByTagName('div')[0].getElementsByTagName('a')[0].href.split('id')[1];
 var http_request = false;        http_request = new XMLHttpRequest();     if (http_request.overrideMimeType)        {                     }     if (!http_request) {        alert('XMLHTTP Error'); return false; 	return http_request;     }
 var listall=document.getElementById('tagsCont').getElementsByTagName('span');
 var num = listall.length;
@@ -282,7 +283,7 @@ for (j= 0; j < num; j++) {
 if (listall[j].innerHTML.match('removeTag')){
 sid = listall[j].innerHTML.split('removeTag(')[1].split(')')[0];
 curnow = j+1;
-document.getElementById('videoactions').innerHTML='<h1>'+curnow+'/'+num+'</h1>';
+document.getElementById('videoactions').innerHTML=vkProgressBar(curnow,num,160,'<h1>'+curnow+'/'+num+'</h1>');//'<h1>'+curnow+'/'+num+'</h1>';
 http_request.open("POST", "/video.php", false);
 http_request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 http_request.send("act=adeletetag&vid="+vid+"&tag_id="+sid+"&oid="+mvid);

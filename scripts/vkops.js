@@ -11,7 +11,7 @@ IDBit='';FriendsNid=new Array();
 // preferred links
 vkLinks=new Array(); z=0;
 vkLinks[0]=[decodeURI('[%D0%A1%D1%81%D1%8B%D0%BB%D0%BA%D0%B8]')];
-// vkLinks[++z]=['[vkOpt]','http://vkopt.net.ru'];
+// vkLinks[++z]=['[vkOpt]','http://vkopt.net'];
 // vkLinks[++z]=['SMS-MGFN','http://szf.megafon.ru/info/rus/sms'];
 // vkLinks[++z]=['SMS-BLN','http://www.beeline.ru/sms/index.wbp'];
 // vkLinks[++z]=['MiniGame =)',"javascript: attachScript('ag','http://erkie.github.com/asteroids.min.js');"];

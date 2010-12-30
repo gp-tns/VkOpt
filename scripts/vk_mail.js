@@ -105,16 +105,18 @@ function vkMsgHistoryText(){
 
 
 function SetUnReadColor(){
-    var cldwn = 120;
-    var bgcolor = getMsgColor(), clar = hex2rgb(bgcolor); //background
-    var rr = Math.max(clar[0] - cldwn, 0), gg = Math.max(clar[1] - cldwn,0), bb = Math.max(clar[2] - cldwn, 0);  //calc text color
-    var textcolor = rgb2hex([rr, gg, bb]);
-    //alert(bgcolor+'\n'+textcolor);
-    //#E2E9FF
-    mailcss = ''.concat('.mailbox table tr.newRow { background: ', bgcolor ,' !important; } ',
-        '.mailbox table tr.newRow a { color: ', textcolor, ' !important; }',
-        '.im_hist tr.un {  background-color: ', bgcolor, '!important;} .im_hist tr.un td {  border-color: ', bgcolor, ' !important;}');
-    vkaddcss(mailcss);                            //#3B4DA0
+var cldwn=120;
+var bgcolor=getMsgColor(), clar=hex2rgb(bgcolor); //background
+var rr=Math.max(clar[0]-cldwn,0), gg=Math.max(clar[1]-cldwn,0), bb=Math.max(clar[2]-cldwn,0);  //calc text color
+var textcolor=rgb2hex(Array(rr,gg,bb));
+//alert(bgcolor+'\n'+textcolor);
+                                                 //#E2E9FF
+  mailcss= '.mailbox table tr.newRow { background: '+bgcolor+' !important; } ';
+  mailcss+='.mailbox table tr.newRow a { color: '+textcolor+' !important; }';
+  mailcss+='.im_hist tr.un {  background-color: '+bgcolor+'!important;} .im_hist tr.un td {  border-color: '+bgcolor+' !important;}';
+  vkaddcss(mailcss);                            //#3B4DA0
+  
+  
 }
 
 var MsgFormBox;
