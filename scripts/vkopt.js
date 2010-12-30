@@ -102,9 +102,6 @@ if (typeof(HTMLElement) != "undefined") {
 }
 ///////////
 //////////
-function now(){
-    return new Date().getTime();
-}
 // Функции для работы с DOM
 // создает элемент
 /**/
@@ -250,7 +247,7 @@ function vklog(s,type){
     }
     div.setAttribute('style',style);
     div.appendChild($c("#", s));
-    div.appendChild($c("span",{class:"time", "#text": now() - vkstarted}));
+    div.appendChild($c("span",{class:"time", "#text": new Date().getTime() - vkstarted}));
 //    innerHTML=s+'<span class="time">'+(new Date().toLocaleString().split(' ')[1])+'</span>';
     node.appendChild(div);
     node.scrollTop = node.scrollHeight;
@@ -4154,7 +4151,7 @@ if (!window.Audio){
     this.play  = function(){};
   }
 }
-var vkstarted = now();
+var vkstarted = new Date().getTime();
 
 var vkReadyFunc=vkonDOMReady;//(typeof onDomReady!='undefined')?onDomReady:vkonDOMReady;
 var dloc=document.location.href;
