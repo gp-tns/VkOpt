@@ -2801,7 +2801,7 @@ function VKOptStylesInit(){
      }";
      vkaddcss("".concat(vkmnustyle, gr_in_col, shut, rest));
      if (location.href.indexOf('settings') >= -1){
-         vkaddcss("ul.t0 .tab_word { margin: 5px 8px 0px 8px;}");
+         vkaddcss("ul.t1 .tab_word { margin: 5px 8px 0px 8px;}");
      }
 }
 
@@ -4155,6 +4155,6 @@ var vkstarted = new Date().getTime();
 
 var vkReadyFunc = vkonDOMReady;//(typeof onDomReady!='undefined')?onDomReady:vkonDOMReady;
 var dloc=document.location.href;
-if (!dloc.match(/login\.vk\.com|al_index\.php|\/login\.php/i) && !ge("quick_login")){
+if (!dloc.match(/login\.vk\.com|al_index\.php|\/login\.php/i) && !ge("quick_login")) {
     vkReadyFunc(VkOptInit);
 }

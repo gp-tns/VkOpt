@@ -188,8 +188,8 @@ function vkCatNavigate(elem){
   return false;
 }
 function vkMakeCatMenu(cats){
+  var el = ge("nav") || ge("side_bar").firstElementChild;
   if (!ge("snav")){
-    el=ge("nav");
     //el.setAttribute("id","snav");
     var html='<li><h6 style="cursor:hand;" onclick="vkLoadLeftMenu();">'+IDL('categories')+"</h6></li>"+
              '<li><a href=# onclick="return vkShowSkinMan();">'+IDL('all')+'<span>'+cats.SkinsCount+'</span></a></li>';
@@ -333,6 +333,10 @@ function vkShowSkinMan(filter,page){
   ge("content").innerHTML=html;
   ge("toppages").innerHTML=vkMakePageListS(page,Math.ceil(vkMyStyles.length/VK_THEMES_ON_PAGE)-1,"javascript:vkShowSkinMan("+(filter?filter:false)+",%%);","vkShowSkinMan("+(filter?filter:false)+",%%); return false;");
   ge("header").innerHTML='<h1>'+IDL("SkinMan")+'</h1>';
+  var tmp;
+  if(tmp = ge("home")){
+      tmp.removeAttribute("onclick");
+  }
   return false;
 }
 
