@@ -193,6 +193,7 @@ function vkCatNavigate(elem){
 function vkMakeCatMenu(cats){
   if (!ge("snav")){
     el=(ge('sideBar') || ge('side_bar')).getElementsByTagName('ol')[0];//ge("nav");
+    ge("home").removeAttribute("onclick");
     //el.setAttribute("id","snav");
     var html='<li><h6 style="cursor:hand;" onclick="vkLoadLeftMenu();">'+IDL('categories')+"</h6></li>"+
              '<li><a href=# onclick="return vkShowSkinMan();">'+IDL('all')+'<span>'+cats.SkinsCount+'</span></a></li>';

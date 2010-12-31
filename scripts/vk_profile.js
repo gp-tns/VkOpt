@@ -10,71 +10,68 @@
 
 
 function vkPageProfile(m) {
-var dloc=location.href;
-if (m==1) {	pageMenu='';
-//	pageMenu+='<a href=# onClick="javascript:vkSlide();">- SlideShow</a>';
-	if (dloc.match('/wall.')) if (!dloc.match('person'))
-	if (remixmid()==vkGetWallUID())
-  //document.getElementById('header').getElementsByTagName('a')[0].href.split('id')[1]
-	 pageMenu +='<a onClick="javascript:vkClearWall();" style="cursor: hand;">- '+IDL("wallClear")+'</a>';
-return pageMenu;
-	}
-else {
-// functions
+    var dloc = location.href;
+    if (m == 1) {
+        pageMenu = '';
+        //	pageMenu+='<a href=# onClick="javascript:vkSlide();">- SlideShow</a>';
+        if (dloc.match('/wall.') && !dloc.match('person') && remixmid() == vkGetWallUID())
+        //document.getElementById('header').getElementsByTagName('a')[0].href.split('id')[1]
+        pageMenu += '<a onClick="javascript:vkClearWall();" style="cursor: hand;">- ' + IDL("wallClear") + '</a>';
+        return pageMenu;
+    } else {
+        // functions
 /*
 css=' .flexOpen .c { vertical-align: top !important; height: auto !important; }'+
 ' .flexOpen .c { vertical-align: top !important; height: auto !important; }'+
 ' .friendTable { vertical-align: top !important; }';
 vkaddcss(css);
 */
-if (isUserLink(dloc) || dloc.match('/club'))//dloc.match('/id') || dloc.match('/profile.')
- if (document.getElementById('apps')) {
-	if (getSet(10) == 'y') IDAppsProf();
-	else IDAppsProf_get();
+        if (isUserLink(dloc) || dloc.match('/club')) //dloc.match('/id') || dloc.match('/profile.')
+        if (document.getElementById('apps')) {
+            if (getSet(10) == 'y') IDAppsProf();
+            else IDAppsProf_get();
+        }
+        if (window.cur && cur.section == 'profile') { //(isUserLink(dloc)){//dloc.match('/id') || dloc.match('/profile.')
+            //vkDownMBlog();
+            vkFrProfile();
+            //vkProfileShutInit();
+            if (getSet(8) == 'n') vkFriends_get('online');
+            if (getSet(9) == 'n') vkFriends_get('common');
+            if (getSet(46) == 'y') {
+                VkCalcAge();
+            }
+            if (getSet(64) == 'y') {
+                history_status();
+                InitExHistoryStatus();
+            }
+            if (getSet(55) == 'y') {
+                status_icq();
+            }
+            if (getSet(87) == 'y') vkAvkoNav();
+            //vkInfoToggler();
+            vkUpdWallBtn();
+            addFakeGraffItem();
+        }
+        if (ge('mid') && ge('mid').value == remixmid()) {
+            vkMakeFaveOnline();
+            vkInitProfAdmFunctions();
+        }
+        if (document.getElementById('mid')) var pid = document.getElementById('mid').value;
+        var mid = remixmid(); //(ge('sideBar') || ge('side_bar')).innerHTML.split('mail.php')[1].match(/id=(\d+)/)[1];
+        if (mid != pid) if (!location.href.match('/club') && !location.href.match('/groups')) if (ge('wall')) if (ge('wall').getElementsByTagName('h3')[0] && ge('wall').getElementsByTagName('a')[0]) document.getElementById('wall').getElementsByTagName('h3')[0].getElementsByTagName('div')[1].innerHTML += '<span class="divide">|</span><a href="wall.php?id=' + mid + '&person=' + pid + '">T-a-T</a>';
+        if (dloc.match('/club')) {
+            i = 0;
+            while (ul = document.getElementsByTagName('ul')[i]) {
+                if (ul.getElementsByTagName('a')[1]) if (ul.getElementsByTagName('a')[1].href.match('act=enter')) {
+                    loc = ul.getElementsByTagName('a')[1].href;
+                    ul.getElementsByTagName('a')[1].href = 'javascript:IDEnterGroup(\'' + loc + '\');';
+                }
+                i++;
+            }
+        }
+        //if ((getSet(6) == 'y') && (document.getElementById('groups')))VkoptGroupsInCols();
+    }
 }
-
-if (window.cur && cur.section=='profile'){//(isUserLink(dloc)){//dloc.match('/id') || dloc.match('/profile.')
-  //vkDownMBlog();
-  vkFrProfile();
-  //vkProfileShutInit();
-	if (getSet(8) == 'n') vkFriends_get('online');
-	if (getSet(9) == 'n') vkFriends_get('common');
-	
-  if (getSet(46) == 'y') {VkCalcAge();}
-  if (getSet(64) == 'y') {history_status();InitExHistoryStatus();}
-  if (getSet(55)=='y') {status_icq();}
-  if (getSet(87)=='y')vkAvkoNav();
-  //vkInfoToggler();
-  vkUpdWallBtn();
-  addFakeGraffItem();
-}
-if (ge('mid') && ge('mid').value==remixmid()) {
-  vkMakeFaveOnline();
-  vkInitProfAdmFunctions();
-  
-}
-
-if (document.getElementById('mid'))
- var pid=document.getElementById('mid').value;
-var mid=remixmid();//(ge('sideBar') || ge('side_bar')).innerHTML.split('mail.php')[1].match(/id=(\d+)/)[1];
-if (mid!=pid) if (!location.href.match('/club') && !location.href.match('/groups')) 
-  if (ge('wall')) if (ge('wall').getElementsByTagName('h3')[0] && ge('wall').getElementsByTagName('a')[0])
-document.getElementById('wall').getElementsByTagName('h3')[0].getElementsByTagName('div')[1].innerHTML+='<span class="divide">|</span><a href="wall.php?id='+mid+'&person='+pid+'">T-a-T</a>';
-
-if (dloc.match('/club')) {
-	i=0;
-	while (ul=document.getElementsByTagName('ul')[i]) {
-		if (ul.getElementsByTagName('a')[1]) if (ul.getElementsByTagName('a')[1].href.match('act=enter')) {
-			loc=ul.getElementsByTagName('a')[1].href;
-			ul.getElementsByTagName('a')[1].href='javascript:IDEnterGroup(\''+loc+'\');';
-		}
-	i++;
-	}
-}
-//if ((getSet(6) == 'y') && (document.getElementById('groups')))VkoptGroupsInCols();
-}
-}
-
 function vkInfoToggler(){
  if (ge("profile_full_info")){
     var h4=ge("profile_full_info").getElementsByTagName('h4');
@@ -137,107 +134,119 @@ function vkSortFrList(arr){
   return arr;
 }
 
-function vkFrProfile(){
-  var els=geByClass('module_header');
-  var shuts_mask=parseInt(vkgetCookie('remixbit',1).split('-')[12]);
-  var c=ge('profile_full_link') ? ge('profile_full_link') : geByClass('profile_info_link')[0];
-  if (c){
-    c.setAttribute('title', c.getAttribute('onclick'));
-    c.id='profile_full_link';
-    c.setAttribute('onclick','shut("profile_full_info");');
-  }
-  //els=vkArr2Arr(els);
-  var mod=function(el,postfix){
-    //alert('qwe\n'+el.href);
-    if (postfix=='online' && el.parentNode.id=='profile_friends') el.parentNode.id='profile_friends_online';
-    vkNextEl(el).id='friends_profile_'+postfix;
-    var hdr=geByClass('header_bottom',el)[0];
-    var all=hdr.getElementsByTagName('span')[0];
-    all.innerHTML='<a href="'+el.href+'">'+all.innerHTML+'</a>';
-    var div=document.createElement('div');
-    div.className='module_header';
-    div.appendChild(all);
-    hdr.innerHTML='<a href="javascript:vkFriends_get(\''+postfix+'\')" id="Fr'+postfix+'Lnk">[ '+hdr.innerHTML+' ]</a>';
-    hdr.appendChild(all);
-    div.appendChild(hdr);
-    insertAfter(div,el);
-  };
-  var mod_lite=function(el,postfix){
-    //if (postfix=='online' && el.parentNode.id=='profile_friends') el.parentNode.id='profile_friends_online';
-    //vkNextEl(el).id='friends_profile_'+postfix;
-    //alert(el.href);
-    var hdr=geByClass('header_bottom',el)[0];
-    if (!hdr) return;
-    var all=hdr.getElementsByTagName('span')[0];
-    all.innerHTML='<a href="'+el.href+'">'+all.innerHTML+'</a>';
-    var div=document.createElement('div');
-    div.className='module_header';
-    div.appendChild(all);
-    //hdr.innerHTML='<a href="javascript:vkFriends_get(\''+postfix+'\')" id="Fr'+postfix+'Lnk">[ '+hdr.innerHTML+' ]</a>';
-    hdr.appendChild(all);
-    div.appendChild(hdr);
-    insertAfter(div,el);
-  };
-  var fr_match={
-  'online':'filter=online',
-  'all':/friends.php(\?|$)(?!filter).*/,
-  'common':'filter=common'
-  };
-  var mod_el={
-    'profile_albums':function(el){
-        var el=geByClass('module_body',el)[0];
-        el.innerHTML='<div align="center"><a href="/photos.php?act=albums&oid='+cur.oid+'">[ '+IDL("obzor")+' ]</a> <a href="/photos.php?act=comments&id='+cur.oid+'">[ '+IDL("komm")+' ]</a></div>'+el.innerHTML;
-      }
-  };
-  for (var i=0; i<els.length;i++)
-    if (els[i].href){
-      var mod_l=false;
-      for (var key in fr_match){
-          if (els[i].href.match(fr_match[key])) {mod_l=true; mod(els[i],key);}  
-      }
-      if (!mod_l) mod_lite(els[i]);
-      var key=els[i].parentNode.id;
-      if (mod_el[key]) mod_el[key](els[i].parentNode);
-      
-      if (key && vk_shuts_mask[key]){
-        els[i].setAttribute("onclick",'return shut("'+key+'");');
-        addClass(key,'shut_open');
-        if (shuts_mask & vk_shuts_mask[key]){	shut(key);	}
-      }    
+function vkFrProfile() {
+    var els = geByClass('module_header');
+    var shuts_mask = parseInt(vkgetCookie('remixbit', 1).split('-')[12]);
+    var c = ge('profile_full_link') || geByClass('profile_info_link')[0];
+    if (c) {
+        c.setAttribute('title', c.getAttribute('onclick'));
+        c.id = 'profile_full_link';
+        c.setAttribute('onclick', 'shut("profile_full_info");');
     }
-  switch (parseInt(getSet(82))){
+    //els=vkArr2Arr(els);
+    var mod = function (el, postfix) {
+        //alert('qwe\n'+el.href);
+        if (postfix == 'online' && el.parentNode.id == 'profile_friends') el.parentNode.id = 'profile_friends_online';
+        vkNextEl(el).id = 'friends_profile_' + postfix;
+        var hdr = geByClass('header_bottom', el)[0];
+        var all = hdr.getElementsByTagName('span')[0];
+        all.innerHTML = '<a href="' + el.href + '">' + all.innerHTML + '</a>';
+        var div = document.createElement('div');
+        div.className = 'module_header';
+        div.appendChild(all);
+        hdr.innerHTML = '<a href="javascript:vkFriends_get(\'' + postfix + '\')" id="Fr' + postfix + 'Lnk">[ ' + hdr.innerHTML + ' ]</a>';
+        hdr.appendChild(all);
+        div.appendChild(hdr);
+        insertAfter(div, el);
+    };
+    var mod_lite = function (el, postfix) {
+        //if (postfix=='online' && el.parentNode.id=='profile_friends') el.parentNode.id='profile_friends_online';
+        //vkNextEl(el).id='friends_profile_'+postfix;
+        //alert(el.href);
+        var hdr = geByClass('header_bottom', el)[0];
+        if (!hdr) return;
+        var all = hdr.getElementsByTagName('span')[0];
+        all.innerHTML = '<a href="' + el.href + '">' + all.innerHTML + '</a>';
+        var div = document.createElement('div');
+        div.className = 'module_header';
+        div.appendChild(all);
+        //hdr.innerHTML='<a href="javascript:vkFriends_get(\''+postfix+'\')" id="Fr'+postfix+'Lnk">[ '+hdr.innerHTML+' ]</a>';
+        hdr.appendChild(all);
+        div.appendChild(hdr);
+        insertAfter(div, el);
+    };
+    var fr_match = {
+        'online': 'filter=online',
+        'all': /friends.php(\?|$)(?!filter).*$/,
+        'common': 'filter=common'
+    };
+    var mod_el = {
+        'profile_albums': function (el) {
+            var el = geByClass('module_body', el)[0];
+            el.innerHTML = '<div align="center"><a href="/photos.php?act=albums&oid=' + cur.oid + '">[ ' + IDL("obzor") + ' ]</a> <a href="/photos.php?act=comments&id=' + cur.oid + '">[ ' + IDL("komm") + ' ]</a></div>' + el.innerHTML;
+        }
+    };
+    for (var i = 0; i < els.length; i++)
+    if (els[i].href) {
+        var mod_l = false;
+        for (var key in fr_match) {
+            if (els[i].href.match(fr_match[key])) {
+                mod_l = true;
+                mod(els[i], key);
+            }
+        }
+        if (!mod_l) mod_lite(els[i]);
+        var key = els[i].parentNode.id;
+        if (mod_el[key]) mod_el[key](els[i].parentNode);
+
+        if (key && vk_shuts_mask[key]) {
+            els[i].setAttribute("onclick", 'return shut("' + key + '");');
+            addClass(key, 'shut_open');
+            if (shuts_mask & vk_shuts_mask[key]) {
+                shut(key);
+            }
+        }
+    }
+    switch (parseInt(getSet(82))) {
     case 1:
-        if (shuts_mask & vk_shuts_prof) shut('profile_full_info','0');
-        else shut('profile_full_info','1');
+        if (shuts_mask & vk_shuts_prof) shut('profile_full_info', '0');
+        else shut('profile_full_info', '1');
         break;
     case 2:
-        shut('profile_full_info','1');
-        break; 
+        shut('profile_full_info', '1');
+        break;
     case 3:
-        shut('profile_full_info','0');
-        break; 
-  }
+        shut('profile_full_info', '0');
+        break;
+    }
     //audios
-  var ids = {"profile_audios": vkAudiosGet, "profile_groups": vkGroupsGet};
-  var i;
-  for(i in ids){
-      var abox = ge(i);
-      if(!abox){
-          return;
-      }
-      var aud_header = abox.getElementsByClassName("header_bottom")[0];
-      aud_header.removeChild(aud_header.firstChild);
-      var text = "[ " + aud_header.firstChild.textContent + " ]", link;
-      aud_header.removeChild(aud_header.firstChild);
-      aud_header.insertBefore(link = $c("a",{"#text": text, "href": "javascript:void(0);" }), aud_header.firstChild);
-      link.addEventListener("click", ids[i], 1);
-  }
+    var ids = {
+        "profile_audios": vkAudiosGet,
+        "profile_groups": vkGroupsGet,
+//        "profile_friends": function(e){vkFriends_get('all')},
+//        "profile_friends_online": function(e){vkFriends_Get('online')},
+//        "profile_common_friends": function(e){vkFriends_Get('common')}
+    };
+    var i, abox;
+    for (i in ids) if (abox = ge(i)) {
+        var aud_header = abox.getElementsByClassName("header_bottom")[0];
+        aud_header.removeChild(aud_header.firstChild);
+        var text = "[ " + aud_header.firstChild.textContent + " ]", link;
+        aud_header.removeChild(aud_header.firstChild);
+        aud_header.insertBefore(link = $c("a", {
+            "#text": text,
+            "href": "javascript:void(0);"
+        }), aud_header.firstChild);
+        link.addEventListener("click", ids[i], 1);
+    }
 
 }
 
-function vkAudiosGet(){
-    AjPost('audio.php', {id:cur.oid, qty:'60'}, function(r, t){
-        var abox = ge("profile_audios"), div, ns = {}, s = "";
+function vkAudiosGet() {
+    AjPost('audio.php', {id: cur.oid, qty: '60'}, function (r, t) {
+        var abox = ge("profile_audios"),
+            div, ns = {},
+            s = "";
         var aud_body = abox.getElementsByClassName("module_body")[0];
         t = JSON.parse(t);
         aud_body.innerHTML = "";
@@ -260,8 +269,8 @@ function vkAudiosGet(){
         <div id="player${id}" class="player"></div>\
     </div>\
 </div>';
-        for(var i = 0; i < d.childNodes.length; i++){
-            if((div = d.childNodes[i]).tagName == "DIV"){
+        for (var i = 0; i < d.childNodes.length; i++) {
+            if ((div = d.childNodes[i]).tagName == "DIV") {
                 ns = {};
                 ns.id = div.id.substr(5);
                 ns.url = /operate\('[^']+','(http:\/\/[^']+)',(\d+)\)/.exec($x(".//img[@id='imgbutton" + ns.id + "']", d)[0].onclick);
@@ -269,6 +278,7 @@ function vkAudiosGet(){
                 ns.url = ns.url[1];
                 ns.len2 = $x(".//div[@id='audio" + ns.id + "']//div[@class='duration']", d)[0].innerText;
                 ns.prf = $x(".//b[@id='performer" + ns.id + "']", d)[0].innerText;
+                ns.eprf = escape(ns.prf);
                 ns.title = $x(".//span[@id='title" + ns.id + "']", d)[0].innerText;
                 s += $rnd(divtpl, ns);
             }
@@ -277,28 +287,26 @@ function vkAudiosGet(){
     });
 }
 
-function vkGroupsGet(){
-    AjPost('groups.php', {id:cur.oid, qty:'60'}, function(r, t){
+function vkGroupsGet() {
+    AjPost('groups.php', {id: cur.oid, qty: '60'}, function (r, t) {
         var gbox = ge("profile_groups");
         var g_body = gbox.getElementsByClassName("module_body")[0];
         t = JSON.parse(t);
         var d = $hp(t.html);
         var rm = $x(".//td[@class='tunaimage']", d).concat(
-            $x(".//td[@class='actions']", d),
-            $x(".//td[@class='label']", d),
-            $x(".//td[@class='printcontent'][a]", d)
-        );//.//td[@class='tunaimage']|.//td[@class='actions']|.//td[@class='label']", d);
-        for(var i = 0;i< rm.length; i++){
+        $x(".//td[@class='actions']", d), $x(".//td[@class='label']", d), $x(".//td[@class='printcontent'][a]", d)); //.//td[@class='tunaimage']|.//td[@class='actions']|.//td[@class='label']", d);
+        for (var i = 0; i < rm.length; i++) {
             rm[i].parentNode.removeChild(rm[i]);
         }
         rm = $x(".//td[@class='printcontent']/div", d);
-        for(i = 0;i< rm.length; i++){
-            rm[i].setAttribute("style","overflow:hidden");
+        for (i = 0; i < rm.length; i++) {
+            rm[i].setAttribute("style", "overflow:hidden");
         }
         g_body.innerHTML = "";
         g_body.appendChild(d);
     });
 }
+
 function vkFriends_get(idx){
 //if (1) shut('profile_friends_'+idx);
   var count_el=ge('Fr'+idx+'Lnk');
