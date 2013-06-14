@@ -1,7 +1,7 @@
 ﻿{
    "content_scripts": [ {
       "js": [ "vkinit.js", "scripts/vk_skinman.js" ],
-      "matches": [ "http://vk.com/*", "http://*.vk.com/*", "http://vkontakte.ru/*", "http://*.vkontakte.ru/*" ],
+      "matches": [ "http://vk.com/*", "http://*.vk.com/*"],
       "run_at": "document_end"
    } ],
    "description": "\u0414\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u0438\u0435 \u043C\u043D\u043E\u0436\u0435\u0441\u0442\u0432\u0430 \u0444\u0443\u043D\u043A\u0446\u0438\u0439, \u0443\u043F\u0440\u043E\u0449\u0430\u044E\u0449\u0438\u0445 \u0436\u0438\u0437\u043D\u044C \u0412\u041A\u043E\u043D\u0442\u0430\u043A\u0442\u0435.\u0440\u0443. Official site and support: http://vkopt.net/",
@@ -12,7 +12,7 @@
    },
    "key": "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCdPxU4sdTnFz0Lop7Sdo/qouDgYmzGslz2GBS+BvZCR8Y5WDKGiUy7iXu73s2iAtZIbnO0c5F0R842izwnbuDPJp8cyFYoUraXqWcBAvBamrLirPK4IwMNmiVDTUb7+7iyA323IoLG1XaDGOYzPeocPvQmGFlH+KDdQ+3JJPMNSwIDAQAB",
    "name": "VKOpt",
-   "permissions": [ "http://*.vk.com/*", "http://vk.com/*", "http://*.vkontakte.ru/*", "http://vkontakte.ru/*" ],
+   "permissions": [ "http://*.vk.com/*", "http://vk.com/*"],
    "update_url": "http://clients2.google.com/service/update2/crx",
    "update_url_": "http://vkopt.net.ru/upd/updates.xml",
    "version": "1.9.1"
